@@ -7,7 +7,7 @@ categories: Python JupyterNotebook
 
 This repo give insights of rental costs statistics of non-landed private properties (EC & Condos) in Singapore
 
-**Output file #1:**
+## Output file 1
 1. Price Index by Singapore Districts & No. of Bedroom in June 2023
 
 Eg.
@@ -19,7 +19,7 @@ Eg.
 | `D02 Chinatown / Tanjong Pagar`          | 3800 | 4400 | 4800 | 4800 | 5500 | 6275 |
 | `D03 Alexandra / Commonwealth`           | 3600 | 3900 | 4200 | 4800 | 5300 | 5800 |
 
-**Output file #2:**
+## Output file 2
 
 2. Price Index by Project & No. of Bedroom in June 2023
 
@@ -31,7 +31,7 @@ Eg.
 | `HILLVIEW HEIGHTS` | 3 | 3950 | 1200 |
 | `HILLVIEW HEIGHTS` | 4 | 5750 | 1650 |
 
-**Steps:**
+## Step
 1. Source File is extracted from URA API call - https://www.ura.gov.sg/maps/api/#private-residential-properties-rental-contract (Please register for account and obtain API key)
 2. For this API, data is refreshed on a quarterly basis by URA
 3. Since it is a simple API, API call is made via Postman and JSON file is obtained
