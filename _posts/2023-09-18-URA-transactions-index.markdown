@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "URA transactions index"
-date:   2023-09-18 21:03:36 +0530
+date:   2023-09-18 20:53:58 +0800
 categories: Python Jupyter
 ---
 
