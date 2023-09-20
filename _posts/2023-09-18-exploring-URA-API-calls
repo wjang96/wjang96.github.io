@@ -1,0 +1,14 @@
+---
+layout: post
+title:  "Exploring URA API call"
+date:   2023-09-18 20:53:58 +0800
+categories: Python Jupyter
+---
+How to perform URA API call?
+
+
+**Steps:**
+1. Source File is extracted from URA API call - https://www.ura.gov.sg/maps/api/#private-residential-properties-rental-contract (Please register for account and obtain API key)
+2. For this API, data is refreshed on a quarterly basis by URA
+3. No need to perform API call on a separate IDE
+4. Python is used for converting JSON to CSV file
