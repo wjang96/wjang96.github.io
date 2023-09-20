@@ -21,21 +21,17 @@ Eg.
 
 ## Output file 2
 
-2. Price Index by Project & No. of Bedroom in June 2023
-
 Eg.
 
-| Project | noOfBedRoom | rental_rent| mean_areaSqft| 
-| --------------- | ---------------- | ---------------- | ---------------- |
-| `HILLVIEW HEIGHTS` | 2 | 3666.66 | 950 |
-| `HILLVIEW HEIGHTS` | 3 | 3950 | 1200 |
-| `HILLVIEW HEIGHTS` | 4 | 5750 | 1650 |
+| Project | noOfBedRoom | rental_rent| mean_areaSqft| y | x |
+| --------------- | ---------------- | ---------------- | ---------------- |---------------- | ---------------- |
+| `HILLVIEW HEIGHTS` | 2 | 3666.66 | 950 | 38125.62339 | 20467.25374 |
+| `HILLVIEW HEIGHTS` | 3 | 3950 | 1200 | 38125.62339 | 20467.25374 |
+| `HILLVIEW HEIGHTS` | 4 | 5750 | 1650 | 38125.62339 | 20467.25374 |
 
-
-## Step
+**Steps:**
 1. Source File is extracted from URA API call - https://www.ura.gov.sg/maps/api/#private-residential-properties-rental-contract (Please register for account and obtain API key)
 2. For this API, data is refreshed on a quarterly basis by URA
-3. Since it is a simple API, API call is made via Postman and JSON file is obtained
+3. No need to perform API call on a separate IDE
 4. Python is used for converting JSON to CSV file and further performing data analysis such as caclulating percentile at districts, noofbedroom level
-5. The output file is useful for drawing commentary insights. You may also combine datasets for further analytical purposes such as time-series trend lines.
-
+5. The output file is useful for drawing commentary insights for Singapore Residental rental market on a quarterly basis. You may also combine datasets for further analytical purposes such as time-series trend lines.
