@@ -10,9 +10,9 @@ API source: https://www.ura.gov.sg/maps/api/#private-residential-property
 Transaction data is published by URA. Update Frequency: End of day of every 15th of the month. If it is a public holiday, the data will be updated on the following working day. 
 Retrieval is based on quarterly period. Reference period for data retrieval is required
 
-Creating your **REST API GET Request** can be hassle-free and easy with Python! The entire process can be completed by following a 9-step guide. I constructed a GET request from URA's web API to fetch rental contract data in `.json` format and converted the dataset in `.csv` format for the ease of data load into the database. You can find the .py file stored in my [github repository][gitrepo] as well.
+Creating your **REST API GET Request** can be hassle-free and easy with Python! The entire process can be completed by following a 6-step guide. I constructed a GET request from URA's web API to fetch rental contract data in `.json` format and converted the dataset in `.csv` format for the ease of data load into the database. You can find the .py file stored in my [github repository][gitrepo] as well.
 
-**Below is a 9-step guide (80-line code) on how I constructed the GET request in python to fetch data from URA's web API.**
+**Below is a 6-step guide on how I constructed the GET request in python to fetch data from URA's web API.**
 
 {: class="table-of-content"}
 * TOC
