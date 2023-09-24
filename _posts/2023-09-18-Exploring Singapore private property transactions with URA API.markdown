@@ -1,11 +1,15 @@
 ---
 layout: post
-title:  "URA transactions index"
-date:   2023-09-18 20:53:58 +0800
+title:  "Exploring Singapore private property transactions with URA API"
+date:   2023-08-18 20:53:58 +0800
 categories: Python Jupyter
 ---
 
-This repo give insights of rental costs statistics of non-landed private properties (EC & Condos) in Singapore
+Unlocking data insights based on the **rental figures of private non-landed residential properties** in Singapore!
+API source: https://www.ura.gov.sg/maps/api/#private-residential-property
+Transaction data is published by URA. Update Frequency: End of day of every 15th of the month. If it is a public holiday, the data will be updated on the following working day. 
+Retrieval is based on quarterly period. Reference period for data retrieval is required
+
 
 ## Output file 1
 1. Price Index by Singapore Districts & No. of Bedroom in June 2023
