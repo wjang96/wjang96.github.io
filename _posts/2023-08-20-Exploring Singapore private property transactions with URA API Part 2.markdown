@@ -89,7 +89,7 @@ final_df.columns = final_df.columns.swaplevel(0, 1)
 final_df.sort_index(axis=1, level=0, inplace=True)
 final_df
 ```
-![DF_wideformat]({{ '/assets/URA_df4.png' | relative_url }}) 
+![DF_wideformat]({{ '/assets/URA_df5.png' | relative_url }}) 
 
 ## 7. Save the final_df into a csv for useful commentary insights
 ```python
