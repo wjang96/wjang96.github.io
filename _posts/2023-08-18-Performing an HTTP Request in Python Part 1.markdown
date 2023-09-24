@@ -104,7 +104,7 @@ flattendata = json_normalize(data,'rental',['project','street','y','x'],errors='
 ```
 
 ```
-## 8. Convert json data to .csv file, removing the index number
+## 6. Convert json data to .csv file, removing the index number
 
 ```python
 #convert json data to .csv file, removing the index number
