@@ -56,20 +56,41 @@ End Month: 0923
 df = pd.read_csv(f'transaction_resi_converted_raw_csv_{refperiod}.csv', converters = {'leaseDate': str, 'noOfBedRoom': str})
 ```
 
-## 3. Read the csv file
+## 4. Join the district with district_location.csv to get location info
 ```python
-df = df[df.propertyType.isin(["Non-landed Properties", "Executive Condominium"])]
-df = df[df.noOfBedRoom.isin(["1","2","3","4","5"])]
-df_25th = df.groupby(['district', 'noOfBedRoom']).quantile(.25).rename(columns={"rent": "25th_rental"})
-df_50th = df.groupby(['district', 'noOfBedRoom']).quantile(.50).rename(columns={"rent": "50th_rental"})
-df_75th = df.groupby(['district', 'noOfBedRoom']).quantile(.75).rename(columns={"rent": "75th_rental"})
-df = pd.concat([df_25th] + [df_50th] + [df_75th], axis=1)
-df = pd.pivot_table(df, values = ['25th_rental','50th_rental','75th_rental'], index=['district'], columns = 'noOfBedRoom').reset_index()
-df.columns = df.columns.swaplevel(0, 1)
-df.sort_index(axis=1, level=0, inplace=True)
-df
+district_location_df = pd.read_csv('District_location.csv')
+new_df = pd.merge(district_location_df, df,  how='left', left_on=['District'], right_on = ['district'])
+new_df['District'] = new_df['District'].astype(int)
+new_df
 ```
 
+## 5. Filter for data in non-landed private properties
+```python
+new_df = new_df[new_df.propertyType.isin(["Non-landed Properties", "Executive Condominium"])]
+new_df = new_df[new_df.noOfBedRoom.isin(["1","2","3","4","5"])]
+new_df
+```
+
+## 6. Get the transactions figures in percentile figures
+```python
+df_25th = new_df.groupby(['district', 'Location', 'noOfBedRoom']).quantile(.25).rename(columns={"rent": "25th_rental"})
+df_50th = new_df.groupby(['district', 'Location', 'noOfBedRoom']).quantile(.50).rename(columns={"rent": "50th_rental"})
+df_75th = new_df.groupby(['district', 'Location', 'noOfBedRoom']).quantile(.75).rename(columns={"rent": "75th_rental"})
+```
+
+## 6. Pivot the df to obtain data in a readable format
+```python
+final_df = pd.concat([df_25th] + [df_50th] + [df_75th], axis=1)
+final_df = pd.pivot_table(final_df, values = ['25th_rental','50th_rental','75th_rental'], index=['Location' , 'district'], columns = 'noOfBedRoom').reset_index()
+final_df.columns = final_df.columns.swaplevel(0, 1)
+final_df.sort_index(axis=1, level=0, inplace=True)
+final_df
+```
+
+## 7. Save the final_df into a csv for useful commentary insights
+```python
+final_df.to_csv(f'transactions_resi_price_index_{refperiod}.csv', na_rep='N/A', quoting=csv.QUOTE_NONE, index=False)
+```
 
 
 
