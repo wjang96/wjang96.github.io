@@ -55,6 +55,7 @@ End Month: 0923
 ```python
 df = pd.read_csv(f'transaction_resi_converted_raw_csv_{refperiod}.csv', converters = {'leaseDate': str, 'noOfBedRoom': str})
 ```
+![DF_wideformat]({{ '/assets/URA_df1.png' | relative_url }}) 
 
 ## 4. Join the district with district_location.csv to get location info
 ```python
