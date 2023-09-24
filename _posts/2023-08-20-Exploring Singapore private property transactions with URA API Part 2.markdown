@@ -64,6 +64,7 @@ new_df = pd.merge(district_location_df, df,  how='left', left_on=['District'], r
 new_df['District'] = new_df['District'].astype(int)
 new_df
 ```
+![DF_wideformat]({{ '/assets/URA_df2.png' | relative_url }}) 
 
 ## 5. Filter for data in non-landed private properties
 ```python
@@ -78,6 +79,7 @@ df_25th = new_df.groupby(['district', 'Location', 'noOfBedRoom']).quantile(.25).
 df_50th = new_df.groupby(['district', 'Location', 'noOfBedRoom']).quantile(.50).rename(columns={"rent": "50th_rental"})
 df_75th = new_df.groupby(['district', 'Location', 'noOfBedRoom']).quantile(.75).rename(columns={"rent": "75th_rental"})
 ```
+![DF_wideformat]({{ '/assets/URA_df3.png' | relative_url }}) 
 
 ## 6. Pivot the df to obtain data in a readable format
 ```python
@@ -87,6 +89,7 @@ final_df.columns = final_df.columns.swaplevel(0, 1)
 final_df.sort_index(axis=1, level=0, inplace=True)
 final_df
 ```
+![DF_wideformat]({{ '/assets/URA_df4.png' | relative_url }}) 
 
 ## 7. Save the final_df into a csv for useful commentary insights
 ```python
