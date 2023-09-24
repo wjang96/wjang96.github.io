@@ -5,12 +5,11 @@ date:   2023-08-18 20:53:58 +0800
 categories: Python Jupyter
 ---
 
+A quick tutorial on how to perform an API call using python without a separate IDE. API source can be found over [here][apisource] and you may find the stored in my [github repository][gitrepo] as well.
 
-API source: https://www.ura.gov.sg/maps/api/#private-residential-property
-Transaction data is published by URA. Update Frequency: End of day of every 15th of the month. If it is a public holiday, the data will be updated on the following working day. 
-Retrieval is based on quarterly period. Reference period for data retrieval is required
+The entire process can be completed by following a 6-step guide. I constructed a GET request from URA's web API to fetch rental contract data in `.json` format and converted the dataset in `.csv` format for the ease of data load into the database. 
 
-Creating your **REST API GET Request** can be hassle-free and easy with Python! The entire process can be completed by following a 6-step guide. I constructed a GET request from URA's web API to fetch rental contract data in `.json` format and converted the dataset in `.csv` format for the ease of data load into the database. You can find the .py file stored in my [github repository][gitrepo] as well.
+Transaction data is published by URA. Update Frequency: End of day of every 15th of the month. If it is a public holiday, the data will be updated on the following working day. Retrieval is based on quarterly period. Reference period for data retrieval is required
 
 **Below is a 6-step guide on how I constructed the GET request in python to fetch data from URA's web API.**
 
@@ -114,3 +113,4 @@ flattendata.to_csv('transaction_resi_converted_raw_csv_' + refperiod + '.csv', i
 And it's completed! 
 
 [gitrepo]: https://github.com/wjang96/URA-transactions-index
+[apisource]: https://www.ura.gov.sg/maps/api/#private-residential-property
