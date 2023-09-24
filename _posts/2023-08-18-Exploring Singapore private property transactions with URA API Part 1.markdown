@@ -32,7 +32,12 @@ import pandas as pd
 ```
 These `import` statements load Python code that allow us to work with the data output in JSON format and the HTTP protocol. <br>
 
-## 3. Set up the HTTP GET request to retrieve a daily token
+## 3. Enter the YearQuarter you wish to extract the data from the API call
+```python
+refperiod = '23q3'
+```
+
+## 4. Set up the HTTP GET request to retrieve a daily token
 A valid token needs to be generated to gain access to the data via URA's web API
 
 ```python
@@ -63,7 +68,7 @@ else:
 ```
 
 
-## 4. Send GET Request to retrieve data based on refPeriod
+## 5. Send GET Request to retrieve data based on refPeriod
 To retrieve a list of median rentals of private non-landed residential properties, send GET Request to URA API:
 ```python
 api_url_base2= 'https://www.ura.gov.sg/uraDataService/invokeUraDS?service=PMI_Resi_Rental&'
@@ -91,7 +96,7 @@ else:
     print('[!] Request Failed')
 ```
 
-## 5. Flatten nested data in json file
+## 6. Flatten nested data in json file
 The data retrieved from URA's web API is in a nested json format. We will need to flatten the nested data using json_normalize.
 
 ```python
@@ -103,7 +108,7 @@ flattendata = json_normalize(data,'rental',['project','street','y','x'],errors='
 ```
 
 ```
-## 6. Convert json data to .csv file, removing the index number
+## 7. Convert json data to .csv file, removing the index number
 
 ```python
 #convert json data to .csv file, removing the index number
