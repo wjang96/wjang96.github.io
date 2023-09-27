@@ -147,6 +147,7 @@
         </ul>
       </nav>
       {%- endif -%}
+      <a style = "text-decoration:none" href=" https://wjang96.github.io/about"><h3>About</h3></a>
       <p class="about-footer {{condensed_class}}">&copy;
         {{ "now" | date: "%Y" }}</p>
       {%- if site.plainwhite.dark_mode -%}
@@ -170,7 +171,6 @@
       {{ footer }}
     </footer>
   </main>
-  <a style = "text-decoration:none" href=" https://wjang96.github.io/about"><h3>About</h3></a>
   {% if site.plainwhite.dark_mode %}
   <script type="text/javascript" src="{{ "/assets/js/darkmode.js" | relative_url }}"></script>
   {% endif %}
