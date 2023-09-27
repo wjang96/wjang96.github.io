@@ -21,7 +21,6 @@
         {% if site.plainwhite.portfolio_image_dark and site.plainwhite.dark_mode %}
         <img class="light" src="{{site.baseurl }}/{{ site.plainwhite.portfolio_image }}" alt="{{ site.plainwhite.name }}" />
         <img class="dark" src="{{site.baseurl }}/{{ site.plainwhite.portfolio_image_dark }}" alt="{{ site.plainwhite.name }}" />
-        <a style = "text-decoration:none" href=" https://wjang96.github.io/about"><h3><b>About</b></h3></a>
         {% else %}
         <img src="{{site.baseurl }}/{{ site.plainwhite.portfolio_image }}" alt="{{ site.plainwhite.name }}" />
         {% endif %}
@@ -34,6 +33,7 @@
       <p class="tagline">{{ site.plainwhite.tagline }}</p>
       {%- endif -%}
       </div>
+      <a style = "text-decoration:none" href=" https://wjang96.github.io/about"><h3><b>About</b></h3></a>
       {% capture footer %}
       {%- if site.plainwhite.social_links != '' -%}
       <ul class="social about-footer {{condensed_class}}">
