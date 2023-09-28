@@ -5,27 +5,25 @@ title:  "About"
 ---
 
 ## About
-**Hello! Welcome to my blog!** This is a space where I document new learnings, share data analytics related codes and concepts (e.g. visualizations, processing data) with data enthusiasts! 
+**Hello! Welcome to my blog!** This is a space where I document new learnings, share data engineering & analytics related codes and concepts with data enthusiasts! 
 <br><br> 
 
 <br>
 
 ## Skills
 
-+ **Programming Languages**: Python, SQL, Transact-SQL(T-SQL), BatchScript, JavaScript, R, HTML, CSS
-+ **Data Visualisation Tools**: Tableau, Google Analytics, PowerPoint, Keynote
-+ **Database Applications**:  SQL Server Management Studio (SSMS), SQL Server Integration Service (SSIS), HANA
-+ **Cloud Platform Services**: Microsoft Azure, SAP Cloud Platform
-+ **IDE/Code Compiler**:     Visual Studio, R Studio, Jupyter Notebook, Spyder
-+ **Automation/API**:        Microsoft Power Automate, Postman
-+ **Other Technologies**:    Git, Trello, Asana, Notion 
-+ **Industry Knowledge**:    Real Estate Cashflow Analysis, Financial Statement Analysis, REITs Analysis
-+ **Language**:              English (Native), Chinese (Native), French (Elementary)
++ **Programming Languages**: Python, Pyspark, SQL, NoSQL, R, Shell scripting, CSS, HTML
++ **Softwares & Tools**: Databricks, Azure Data Factory, Gitbash, Jenkins, SonarQube, Nexus, Informatica BDM, Denodo, Microsoft SQL DB, Ambari, Jenkins, Unix/Linux, Autosys
++ **Other Technologies**: Spark, Hive, HDFS, Hortonworks, Cloudera
++ **Data Visualisation Tools**: PowerBI, Tableau, PowerPoint
++ **Cloud Platform Services**: Microsoft Azure, AWS
++ **Industry Knowledge**: Financial Services, Real Estate
++ **Language**: English (Native), Chinese (Native)
 
 <br>
 
 ## Contact Me
-I enjoy working on new challenges, learning new skills (currently learning basic French during my additional pockets of free time) as well as designing engaging and effective visualizations, so feel free to reach out to me via **[LinkedIn][Linkedin]** for anything related to data analytics! 
+I enjoy working on new challenges, learning new skills (currently learning more about geospatial data during my additional pockets of free time) as well as designing engaging and effective visualizations, so feel free to reach out to me via **[LinkedIn][Linkedin]** for anything related to data engineering & analytics! 
 
 <br>
 <br>
