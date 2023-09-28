@@ -84,7 +84,8 @@ df_75th = new_df.groupby(['district', 'Location', 'noOfBedRoom']).quantile(.75).
 ## 6. Pivot the df to obtain data in a readable format
 ```python
 final_df = pd.concat([df_25th] + [df_50th] + [df_75th], axis=1)
-final_df = pd.pivot_table(final_df, values = ['25th_rental','50th_rental','75th_rental'], index=['Location' , 'district'], columns = 'noOfBedRoom').reset_index()
+final_df = pd.pivot_table(final_df, values = ['25th_rental','50th_rental','75th_rental'], index=['Location' , 'district'], columns = 'noOfBedRoom').sort_values(by='district', ascending = True).reset_index()
+final_df['district'] = final_df['district'].astype(int)
 final_df.columns = final_df.columns.swaplevel(0, 1)
 final_df.sort_index(axis=1, level=0, inplace=True)
 final_df
