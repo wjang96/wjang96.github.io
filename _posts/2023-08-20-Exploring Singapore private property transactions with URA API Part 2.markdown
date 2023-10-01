@@ -99,4 +99,3 @@ final_df.to_csv(f'transactions_resi_price_index_{refperiod}.csv', na_rep='N/A', 
 The output file is useful for drawing commentary insights for Singapore Residental rental market on a quarterly basis. You may also combine datasets for further analytical purposes such as time-series trend lines.
 
 <div id="htmlwidget-c22ca496d1080dce3b38" style="width:900px;height:600px;" class="leaflet html-widget"></div>
-{% include bubbleprop.html %}
