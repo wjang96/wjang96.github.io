@@ -5,9 +5,9 @@ date:   2023-08-28 20:53:58 +0800
 categories: Python R Leaflet
 ---
 
-Unlocking data insights based on the **rental figures of private non-landed residential properties** in Singapore! This is in continuation of the URA API series.
+Embed **interactive map** onto any website! This is in continuation of the URA API series.
 
-**Below contains 2 data wrangling script to unlock insights of the transactions data**
+**Below contains a data wrangling python script and creating a leaflet map using R script to unlock insights of the transactions data**
 
 {: class="table-of-content"}
 * TOC
@@ -83,7 +83,8 @@ df = df.drop(['areaSqft_lower', 'areaSqft_higher'], axis=1)
 df
 ```
 
-## 6. Convert x y coordinates to lat long coordinates. I make use of a open source python script to do so. You may check out the script over here: https://github.com/cgcai/SVY21
+## 6. Convert x y coordinates to lat long coordinates
+I make use of a open source python script to do so. You may check out the script over here: [github repository][gitrepo]
 Firstly, generate a separate csv as input file for SVY21.py script
 ```python
 # generate a separate csv as input file for SVY21.py script
@@ -142,3 +143,4 @@ three_bedder_df.to_csv(f'transactions_three_bedder_{refperiod}.csv', na_rep='N/A
 
 
 {% include bubbleprop.html %}
+[gitrepo]: https://github.com/cgcai/SVY21
