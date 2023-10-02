@@ -69,7 +69,7 @@ col = df.loc[: , "areaSqft_lower":"areaSqft_higher"]
 df['mean_areaSqft'] = col.mean(axis=1)
 df
 ```
-![DF_wideformat]({{ '/assets/URA_df2.png' | relative_url }}) 
+![DF_wideformat]({{ '/assets/URA_df6.png' | relative_url }}) 
 
 ## 5. Aggregrate the transactions by Project & No. of Bedrooms
 ```python
@@ -82,6 +82,7 @@ df['mean_areaSqft'] = np.where(df['mean_areaSqft'] == '3000.0', '>3000', df['mea
 df = df.drop(['areaSqft_lower', 'areaSqft_higher'], axis=1)
 df
 ```
+![DF_wideformat]({{ '/assets/URA_df7.png' | relative_url }}) 
 
 ## 6. Convert x y coordinates to lat long coordinates
 I make use of a open source python script to do so. You may check out the script over here: [github repository][gitrepo]
@@ -100,14 +101,14 @@ df_merged = df_merged.drop(['y', 'x'], axis=1)
 df_merged.rename(columns= {'Y': 'lat' , 'X': 'long'}, inplace = True)
 df_merged
 ```
-![DF_wideformat]({{ '/assets/URA_df3.png' | relative_url }}) 
+![DF_wideformat]({{ '/assets/URA_df8.png' | relative_url }}) 
 
 ## 6. Filter for visualisation dataset for 3 bedder condos
 ```python
 three_bedder_df  = df_merged[df.noOfBedRoom.isin(["3"])].reset_index()
 three_bedder_df
 ```
-![DF_wideformat]({{ '/assets/URA_df5.png' | relative_url }}) 
+![DF_wideformat]({{ '/assets/URA_df9.png' | relative_url }}) 
 
 ## 7. Categorise the transactions to fall under 25th, 50th, 70th percentiles to visualise it in bubble plots
 A transaction rental record would be tagged as 'Low', Average', High', 'Extreme' according to the percentile category it falls under. These 4 categories would be represented with different bubble colours in the interactive map later.
@@ -131,6 +132,7 @@ three_bedder_df['rentCategory'] = three_bedder_df.apply(conditions, axis=1)
 three_bedder_df = three_bedder_df.replace({'rentCategory': {0:'Low', 1:'Average', 2:'High', 3:'Extreme'}})
 three_bedder_df
 ```
+![DF_wideformat]({{ '/assets/URA_df10.png' | relative_url }}) 
 
 ## 8. Save the df_merged and three_bedder_df to csv files
 ```python
