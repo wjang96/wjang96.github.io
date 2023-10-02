@@ -5,7 +5,7 @@ date:   2023-08-28 20:53:58 +0800
 categories: Python R Leaflet
 ---
 
-Embed **interactive map** onto any website! This is in continuation of the URA API series.
+Embed an **interactive map** onto any website! This is in continuation of the URA API series.
 
 **Below contains a data wrangling python script and creating a leaflet map using R script to unlock insights of the transactions data**
 
@@ -85,7 +85,6 @@ df
 
 ## 6. Convert x y coordinates to lat long coordinates
 I make use of a open source python script to do so. You may check out the script over here: [github repository][gitrepo]
-Firstly, generate a separate csv as input file for SVY21.py script
 ```python
 # generate a separate csv as input file for SVY21.py script
 # to convert x y coordinates to lat long coordinates
@@ -132,7 +131,6 @@ three_bedder_df['rentCategory'] = three_bedder_df.apply(conditions, axis=1)
 three_bedder_df = three_bedder_df.replace({'rentCategory': {0:'Low', 1:'Average', 2:'High', 3:'Extreme'}})
 three_bedder_df
 ```
-The output file is useful for drawing commentary insights for Singapore Residental rental market on a quarterly basis. You may also combine datasets for further analytical purposes such as time-series trend lines.
 
 ## 8. Save the df_merged and three_bedder_df to csv files
 ```python
