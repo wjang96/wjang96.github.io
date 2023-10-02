@@ -1,3 +1,3 @@
 ## Personal Portfolio
-# wjang.96@github.io
+# wjang.96@.github.io
 
