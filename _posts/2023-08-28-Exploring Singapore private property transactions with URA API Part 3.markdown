@@ -111,6 +111,7 @@ three_bedder_df
 ![DF_wideformat]({{ '/assets/URA_df5.png' | relative_url }}) 
 
 ## 7. Categorise the transactions to fall under 25th, 50th, 70th percentiles to visualise it in bubble plots
+A transaction rental record would be tagged as 'Low', Average', High', 'Extreme' according to the percentile category it falls under. These 4 categories would be represented with different bubble colours in the interactive map later.
 ```python
 three_bedder_df_25th = three_bedder_df.groupby(['noOfBedRoom']).quantile(.25).rename(columns={"rent": "25th_rental"})
 three_bedder_df_50th = three_bedder_df.groupby(['noOfBedRoom']).quantile(.50).rename(columns={"rent": "50th_rental"})
@@ -141,6 +142,7 @@ df_merged.to_csv(f'transactions_resi_project_bedroom_index_{refperiod}.csv', na_
 three_bedder_df.to_csv(f'transactions_three_bedder_{refperiod}.csv', na_rep='N/A', quoting=csv.QUOTE_NONE, index=False)
 ```
 
-
+## 9. Leaflet and Bubble Plots using R
+To add bubbles in specific locations, we use the addCircles function. The parameters lng and lat refer to the longitude and latitude. The radius determines the size of the bubble, which we set to be proportional to the square root of the average price. We can also display a pop up when the user’s mouse hovers over the bubble. In our case we display the project name, average price, district.
 {% include bubbleprop.html %}
 [gitrepo]: https://github.com/cgcai/SVY21
