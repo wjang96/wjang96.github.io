@@ -2,7 +2,7 @@
 layout: post
 title:  "Exploring Singapore private property transactions with URA API Part 3"
 date:   2023-08-28 20:53:58 +0800
-categories: Python R
+categories: Python R Leaflet
 ---
 
 Unlocking data insights based on the **rental figures of private non-landed residential properties** in Singapore! This is in continuation of the URA API series.
