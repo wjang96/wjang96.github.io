@@ -2,12 +2,12 @@
 layout: post
 title:  "Exploring Singapore private property transactions with URA API Part 3"
 date:   2023-08-28 20:53:58 +0800
-categories: Python R Leaflet
+categories: Python Jupyter
 ---
 
-Embed an **interactive map** onto any website! This is in continuation of the URA API series.
+Perform **data wrangling** using python to create useful datasets for **visualising property transactions**! This is in continuation of the URA API series.
 
-**Below contains a data wrangling python script and creating a leaflet map using R script to unlock insights of the transactions data**
+**Below contains data wrangling python scripts to create datasets for useful visualisations later**
 
 {: class="table-of-content"}
 * TOC
@@ -142,7 +142,6 @@ df_merged.to_csv(f'transactions_resi_project_bedroom_index_{refperiod}.csv', na_
 three_bedder_df.to_csv(f'transactions_three_bedder_{refperiod}.csv', na_rep='N/A', quoting=csv.QUOTE_NONE, index=False)
 ```
 
-## 9. Leaflet and Bubble Plots using R
-To add bubbles in specific locations, we use the addCircles function. The parameters lng and lat refer to the longitude and latitude. The radius determines the size of the bubble, which we set to be proportional to the square root of the average price. We can also display a pop up when the user’s mouse hovers over the bubble. In our case we display the project name, average price, district.
-{% include bubbleprop.html %}
+We have now prepared 2 datasets for useful visualisations later.
+
 [gitrepo]: https://github.com/cgcai/SVY21
