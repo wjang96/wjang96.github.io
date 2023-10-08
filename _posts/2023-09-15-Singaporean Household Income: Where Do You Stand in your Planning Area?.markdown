@@ -168,14 +168,22 @@ hmi_df.to_csv('household_monthly_income_2020_cleansed.csv', index=False)
 We have now prepared the dataset for useful visualisations later.
 
 ## 9. Convert KML file to JSON file using https://mapshaper.org/
-Choose the `geojson` option download the Singapore Planning Areas in JSON file. 
+Choose the `geojson` option to download the Singapore Planning Areas in JSON file.
+
 ![DF_wideformat]({{ '/assets/map_shapper_1.png' | relative_url }}) 
 
 ## 10. Create Shape Map visualizations in Power BI Desktop
-You may check out this [PowerBI guide][shapemap] if this is your first time doing so.
+We will be using the downloaded json file to create a Shape Map in PowerBI to represent the boundaries of Planning Areas in Singapore. You may check out this [Shape maps guide][shapemap] if this is your first time doing so.
+
+With the above hmi_df dataset, visualise the % breakdown of different ranges of Household Monthly Income by Planning Areas. For eg. you could see that **Bukit Merah** has a higher percentage of households not working compared to **Bedok**, which may attribute to higher elderly poplation in **Bukit Merah** or other possbile reasons. On the other hand, **Tampines** has much lower non-working households compared to other areas.
+
 ![DF_wideformat]({{ '/assets/onemap_1.png' | relative_url }})
-![DF_wideformat]({{ '/assets/onemap_2.png' | relative_url }}) 
+
+Tooltip can be added to display the counts of households under the category.
+
 ![DF_wideformat]({{ '/assets/onemap_3.png' | relative_url }}) 
+
+This is an exploratory data analysis project! If you find it useful, you could drill down further with other datasets to gather more insights :)
 
 [datagovsg]: https://beta.data.gov.sg/collections?query=planning%20area
 [gitrepo]: https://github.com/wjang96/onemap-sg
