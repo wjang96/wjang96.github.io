@@ -5,11 +5,11 @@ date:   2023-09-15 20:53:58 +0800
 categories: Python PowerBI
 ---
 
-Ever wonder how much your *monthly household income* at your area is compared to another area? (Eg. Bedok vs Jurong) This work is inspired by a [seedly article][seedlyarticle] and you may find the code in my [github repository][gitrepo].
+Ever wonder how much your **monthly household income** at your area is compared to another area? (Eg. Bedok vs Jurong) This work is inspired by a [seedly article][seedlyarticle] and you may find the code in my [github repository][gitrepo].
 
-From [datagovsg][datagovsg], URA updates the masterplan every few years and we will be able to get the most recent updated KML file of the Singapore planning area. This will be used for visualising the Household Monthly IncomeWork by Planning Area later.
+From [datagovsg][datagovsg], URA updates the masterplan every few years and we will be able to get the most recent updated KML file of the Singapore planning area. This will be used for visualising the Household Monthly Income by Planning Area later.
 
-**Below contains data wrangling python scripts to create datasets for useful visualisations later**
+Before that, we need to prepare the dataset from [Onemap API][onemapapi]!
 
 {: class="table-of-content"}
 * TOC
@@ -71,7 +71,9 @@ flattendata = json_normalize(data)
 flattendata.to_csv('planning_area_list_' + str(year_minus_1) + '.csv', index=False)
 ```
 Example output:
+
 2022
+
 Success! json dataset to convert to csv is embedded in data_info['Result']
 
 ## 3. Read the csv file
@@ -82,7 +84,8 @@ df = df.tail(-1)
 ```
 ![DF_wideformat]({{ '/assets/URA_df1.png' | relative_url }}) 
 
-## 4. For loop to call onemap API with the planning areas gotten from previous list. Take note that onemap API is updated every 5 years hence, we are using 2020 data
+## 4. For loop to perform Onemap API call mutliple times to get the household monthly income from different planning areas
+Take note that onemap API is updated every 5 years hence, we are using 2020 data
 ```python
 # insert your own API key
 Authorization_key = "Insert your API key"
@@ -127,9 +130,8 @@ hmi_df = hmi_df.dropna(subset=['total'])
 ![DF_wideformat]({{ '/assets/URA_df7.png' | relative_url }}) 
 
 ## 6. Data cleansing to remove unwanted rows and dirty data
-I make use of a open source python script to do so. You may check out the script over here: [github repository][gitrepo]
 ```python
-# performd data cleansing to remove unwanted rows and dirty data
+# perform data cleansing to remove unwanted rows and dirty data
 hmi_df = hmi_df[~hmi_df.planning_area.str.contains("planning_area")]
 hmi_df['total'] = hmi_df['total'].astype(int)
 hmi_df = hmi_df[hmi_df.total != 0]
@@ -140,7 +142,7 @@ for column in hmi_df.columns.tolist():
         hmi_df = hmi_df.astype({column : "int"})
 ```
 
-## 6. Summing up columns for better visualisation
+## 7. Summing up columns for better visualisation
 ```python
 # summing up columns for better visualisation
 col_list1 = ['below_sgd_1000', 'sgd_1000_to_1999', 'sgd_2000_to_2999', 'sgd_3000_to_3999', 'sgd_4000_to_4999']
@@ -156,7 +158,7 @@ hmi_df['sgd_15000_above'] = hmi_df[col_list4].sum(axis=1)
 ```
 ![DF_wideformat]({{ '/assets/URA_df9.png' | relative_url }}) 
 
-## 7. Save the hmi_df to csv file
+## 8. Save the hmi_df to csv file
 ```python
 # keep useful columns for visualising data
 hmi_df = hmi_df[['planning_area', 'total', 'no_working_person', 'sgd_0_to_5000', 'sgd_5000_to_10000', 'sgd_10000_to_15000', 'sgd_15000_above']]
@@ -164,9 +166,10 @@ hmi_df
 # export hmi_df into csv
 hmi_df.to_csv('household_monthly_income_2020_cleansed.csv', index=False)
 ```
-
 We have now prepared the dataset for useful visualisations later.
+
 
 [datagovsg]: https://beta.data.gov.sg/collections?query=planning%20area
 [gitrepo]: https://github.com/wjang96/onemap-sg
 [seedlyarticle]: https://blog.seedly.sg/median-singaporean-household-income-stand/
+[onemapapi]: https://www.onemap.gov.sg/apidocs/apidocs
