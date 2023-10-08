@@ -156,7 +156,6 @@ hmi_df['sgd_10000_to_15000'] = hmi_df[col_list3].sum(axis=1)
 hmi_df['sgd_15000_above'] = hmi_df[col_list4].sum(axis=1)
 #hmi_df
 ```
-![DF_wideformat]({{ '/assets/URA_df9.png' | relative_url }}) 
 
 ## 8. Save the hmi_df to csv file
 ```python
@@ -168,8 +167,18 @@ hmi_df.to_csv('household_monthly_income_2020_cleansed.csv', index=False)
 ```
 We have now prepared the dataset for useful visualisations later.
 
+## 9. Convert KML file to JSON file using https://mapshaper.org/
+Choose the `geojson` option download the Singapore Planning Areas in JSON file. 
+![DF_wideformat]({{ '/assets/map_shapper_1.png' | relative_url }}) 
+
+## 10. Create Shape Map visualizations in Power BI Desktop
+You may check out this [PowerBI guide][shapemap] if this is your first time doing so.
+![DF_wideformat]({{ '/assets/onemap_1.png' | relative_url }})
+![DF_wideformat]({{ '/assets/onemap_2.png' | relative_url }}) 
+![DF_wideformat]({{ '/assets/onemap_3.png' | relative_url }}) 
 
 [datagovsg]: https://beta.data.gov.sg/collections?query=planning%20area
 [gitrepo]: https://github.com/wjang96/onemap-sg
 [seedlyarticle]: https://blog.seedly.sg/median-singaporean-household-income-stand/
 [onemapapi]: https://www.onemap.gov.sg/apidocs/apidocs
+[shapemap]: https://learn.microsoft.com/en-us/power-bi/visuals/desktop-shape-map
