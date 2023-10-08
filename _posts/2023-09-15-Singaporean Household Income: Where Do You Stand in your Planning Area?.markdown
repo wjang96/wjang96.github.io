@@ -5,7 +5,9 @@ date:   2023-09-15 20:53:58 +0800
 categories: Python PowerBI
 ---
 
-From URA masterplan, we will be able to get the Singapore planning area from [datagovsg][datagovsg]. This will be used as parameters for making the Onemap API call later to get the Household Monthly IncomeWork by Planning Area.
+Ever wonder how much your *monthly household income* at your area is compared to another area? (Eg. Bedok vs Jurong) This work is inspired by a [seedly article][seedlyarticle] and you may find the code in my [github repository][gitrepo].
+
+From [datagovsg][datagovsg], URA updates the masterplan every few years and we will be able to get the most recent updated KML file of the Singapore planning area. This will be used for visualising the Household Monthly IncomeWork by Planning Area later.
 
 **Below contains data wrangling python scripts to create datasets for useful visualisations later**
 
@@ -15,133 +17,156 @@ From URA masterplan, we will be able to get the Singapore planning area from [da
 
 ## 1. Import the required libraries
 ```python
+import json
+import requests
 import pandas as pd
 import csv
-import json
-import numpy as np
-import re
+import datetime
 ```
-## 2. Invoke the necessary parameters to work with the transaction file
+## 2. Perform Onemap API call to get the list of planning areas dated last year
 ```python
-# Enter the refperiod of your transaction file
-refperiod = "23q3"
+# Get the current date
+current_date = datetime.datetime.now()
 
-# Extract the year and quarter using regular expressions
-match = re.match(r'(\d{2})q(\d)', refperiod)
+# Subtract 1 year from the current year
+one_year_ago = current_date - datetime.timedelta(days=365)
 
-if match:
-    year = match.group(1)
-    quarter = int(match.group(2))
+# Get the year from the result
+year_minus_1 = one_year_ago.year
+
+print(year_minus_1)
+      
+url = f"https://www.onemap.gov.sg/api/public/popapi/getPlanningareaNames?year={year_minus_1}"
+
+# insert your own API key
+Authorization_key = "Insert your API key"
+
+headers = {'Content-Type': 'application/json',
+           'Authorization': Authorization_key,
+           'User-Agent': 'Mozilla/5.0'}
+
+# Perform API call to get the list of planning areas dated last year
+def get_data():
+
+    response = response = requests.request("GET", url, headers=headers)
+
+    if response.status_code == 200:
+        return json.loads(response.content.decode('utf-8'))
+    else:
+        return None
     
-    # Calculate the start month
-    start_month = str((quarter - 1) * 3 + 1).zfill(2)
-    
-    # Calculate the end month
-    end_month = str(quarter * 3).zfill(2)
-    
-    # Combine the year and month to get the desired format
-    startMonthID = start_month + year
-    endMonthID = end_month + year
-    
-    print("Start Month:", startMonthID)
-    print("End Month:", endMonthID)
+data_info = get_data()
+
+if data_info is not None:
+    print("Success! json dataset to convert to csv is embedded in data_info['Result']")   
 else:
-    print("Invalid refperiod format.")
+    print('[!] Request Failed')
+
+#flatten nested data in json file
+from pandas.io.json import json_normalize
+data = data_info
+flattendata = json_normalize(data)
+
+#convert json data to .csv file, removing the index number
+flattendata.to_csv('planning_area_list_' + str(year_minus_1) + '.csv', index=False)
 ```
 Example output:
-Start Month: 0723
-End Month: 0923
+2022
+Success! json dataset to convert to csv is embedded in data_info['Result']
 
 ## 3. Read the csv file
 ```python
-df = pd.read_csv(f'transaction_resi_converted_raw_csv_{refperiod}.csv', converters = {'leaseDate': str, 'noOfBedRoom': str})
+df = pd.read_csv('planning_area_list_2022.csv')
+# Remove the first row as it is not relevant
+df = df.tail(-1) 
 ```
 ![DF_wideformat]({{ '/assets/URA_df1.png' | relative_url }}) 
 
-## 4. Filter for property tranasctions for EC & Private Condos. Get the average area sqft of each transaction record
+## 4. For loop to call onemap API with the planning areas gotten from previous list. Take note that onemap API is updated every 5 years hence, we are using 2020 data
 ```python
-df = df[df.propertyType.isin(["Non-landed Properties", "Executive Condominium"])]
-df = df[df.noOfBedRoom.isin(["1","2","3","4","5"])]
-df['areaSqft'] = np.where(df['areaSqft'] == '>3000', '3000-3000', df['areaSqft'])
-df[['areaSqft_lower', 'areaSqft_higher']] = df['areaSqft'].str.split('-', expand=True)
-df = df.astype({"areaSqft_lower":"int","areaSqft_higher":"int"})
-col = df.loc[: , "areaSqft_lower":"areaSqft_higher"]
-df['mean_areaSqft'] = col.mean(axis=1)
-df
-```
-![DF_wideformat]({{ '/assets/URA_df6.png' | relative_url }}) 
+# insert your own API key
+Authorization_key = "Insert your API key"
 
-## 5. Aggregrate the transactions by Project & No. of Bedrooms
+headers = {'Content-Type': 'application/json',
+           'Authorization': Authorization_key,
+           'User-Agent': 'Mozilla/5.0'}
+
+
+def get_data(url):
+
+    response = response = requests.request("GET", url, headers=headers)
+
+    if response.status_code == 200:
+        return json.loads(response.content.decode('utf-8'))
+    else:
+        return None
+
+# for loop to call onemap API with the planning areas gotten from previous list   
+# take note that onemap API is updated every 5 years hence, we are using 2020 data
+for planning_area in df['pln_area_n']:
+    url = f"https://www.onemap.gov.sg/api/public/popapi/getHouseholdMonthlyIncomeWork?planningArea={planning_area}&year=2020"
+    data_info = get_data(url)
+    if data_info is not None:
+        print("Success! json dataset to convert to csv is embedded in data_info['Result']")   
+    else:
+        print('[!] Request Failed')
+
+    #flatten nested data in json file
+    from pandas.io.json import json_normalize
+    data = data_info
+    print(data_info)
+    flattendata = json_normalize(data)
+    flattendata.to_csv('household_monthly_income_' + '2020' + '.csv', mode='a' , index=False)
+```
+
+## 5. Read the csv file
 ```python
-df = df.groupby(['project', 'noOfBedRoom','propertyType']).mean().reset_index()
-df = df.replace(to_replace="Non-landed Properties",
-           value="Private Condominium")
-df = df.astype({"mean_areaSqft":"str"})
-df.dtypes
-df['mean_areaSqft'] = np.where(df['mean_areaSqft'] == '3000.0', '>3000', df['mean_areaSqft'])
-df = df.drop(['areaSqft_lower', 'areaSqft_higher'], axis=1)
-df
+hmi_df = pd.read_csv('household_monthly_income_2020.csv')
+hmi_df = hmi_df.dropna(subset=['total'])
 ```
 ![DF_wideformat]({{ '/assets/URA_df7.png' | relative_url }}) 
 
-## 6. Convert x y coordinates to lat long coordinates
+## 6. Data cleansing to remove unwanted rows and dirty data
 I make use of a open source python script to do so. You may check out the script over here: [github repository][gitrepo]
 ```python
-# generate a separate csv as input file for SVY21.py script
-# to convert x y coordinates to lat long coordinates
-x_y_coord_df = df.drop(['project', 'noOfBedRoom', 'district', 'rent', 'mean_areaSqft'], axis=1)
-x_y_coord_df.to_csv(f'x_y_coord_df_{refperiod}.csv', na_rep='N/A', quoting=csv.QUOTE_NONE, index=False)
-
-# run python SVY21.py x_y_coord_df_23q3.csv output_x_y_coord_df_23q3.csv
-# output file will have lat & long coordinates
-lat_long_df = pd.read_csv(f'output_x_y_coord_df_{refperiod}.csv')
-# simple joining using index
-df_merged = df.join(lat_long_df)
-df_merged = df_merged.drop(['y', 'x'], axis=1)
-df_merged.rename(columns= {'Y': 'lat' , 'X': 'long'}, inplace = True)
-df_merged
+# performd data cleansing to remove unwanted rows and dirty data
+hmi_df = hmi_df[~hmi_df.planning_area.str.contains("planning_area")]
+hmi_df['total'] = hmi_df['total'].astype(int)
+hmi_df = hmi_df[hmi_df.total != 0]
+hmi_df = hmi_df.reset_index(drop=True)
+# convert all the columns' datatype to int except planning_area
+for column in hmi_df.columns.tolist():
+    if column != 'planning_area':
+        hmi_df = hmi_df.astype({column : "int"})
 ```
-![DF_wideformat]({{ '/assets/URA_df8.png' | relative_url }}) 
 
-## 6. Filter for visualisation dataset for 3 bedder condos
+## 6. Summing up columns for better visualisation
 ```python
-three_bedder_df  = df_merged[df.noOfBedRoom.isin(["3"])].reset_index()
-three_bedder_df
+# summing up columns for better visualisation
+col_list1 = ['below_sgd_1000', 'sgd_1000_to_1999', 'sgd_2000_to_2999', 'sgd_3000_to_3999', 'sgd_4000_to_4999']
+col_list2 = ['sgd_5000_to_5999', 'sgd_6000_to_6999', 'sgd_7000_to_7999', 'sgd_8000_to_8999', 'sgd_9000_to_9999']
+col_list3 = ['sgd_10000_to_10999', 'sgd_11000_to_11999', 'sgd_12000_to_12999', 'sgd_13000_to_13999', 'sgd_14000_to_14999']
+col_list4 = ['sgd_15000_to_17499', 'sgd_17500_to_19999', 'sgd_20000_over']
+
+hmi_df['sgd_0_to_5000'] = hmi_df[col_list1].sum(axis=1)
+hmi_df['sgd_5000_to_10000'] = hmi_df[col_list2].sum(axis=1)
+hmi_df['sgd_10000_to_15000'] = hmi_df[col_list3].sum(axis=1)
+hmi_df['sgd_15000_above'] = hmi_df[col_list4].sum(axis=1)
+#hmi_df
 ```
 ![DF_wideformat]({{ '/assets/URA_df9.png' | relative_url }}) 
 
-## 7. Categorise the transactions to fall under 25th, 50th, 70th percentiles to visualise it in bubble plots
-A transaction rental record would be tagged as 'Low', Average', High', 'Extreme' according to the percentile category it falls under. These 4 categories would be represented with different bubble colours in the interactive map later.
+## 7. Save the hmi_df to csv file
 ```python
-three_bedder_df_25th = three_bedder_df.groupby(['noOfBedRoom']).quantile(.25).rename(columns={"rent": "25th_rental"})
-three_bedder_df_50th = three_bedder_df.groupby(['noOfBedRoom']).quantile(.50).rename(columns={"rent": "50th_rental"})
-three_bedder_df_75th = three_bedder_df.groupby(['noOfBedRoom']).quantile(.75).rename(columns={"rent": "75th_rental"})
-
-def conditions(s):
-    if s['rent'] < three_bedder_df_25th['25th_rental'].iloc[0] :
-        val = 0
-    elif s['rent'] < three_bedder_df_50th['50th_rental'].iloc[0] :
-        val = 1
-    elif s['rent'] < three_bedder_df_75th['75th_rental'].iloc[0] :
-        val = 2
-    else:
-        val = 3
-    return val
-
-three_bedder_df['rentCategory'] = three_bedder_df.apply(conditions, axis=1)
-three_bedder_df = three_bedder_df.replace({'rentCategory': {0:'Low', 1:'Average', 2:'High', 3:'Extreme'}})
-three_bedder_df
-```
-![DF_wideformat]({{ '/assets/URA_df10.png' | relative_url }}) 
-
-## 8. Save the df_merged and three_bedder_df to csv files
-```python
-# export df_merged into csv
-df_merged.to_csv(f'transactions_resi_project_bedroom_index_{refperiod}.csv', na_rep='N/A', quoting=csv.QUOTE_NONE, index=False)
-# export three_bedder_df into csv
-three_bedder_df.to_csv(f'transactions_three_bedder_{refperiod}.csv', na_rep='N/A', quoting=csv.QUOTE_NONE, index=False)
+# keep useful columns for visualising data
+hmi_df = hmi_df[['planning_area', 'total', 'no_working_person', 'sgd_0_to_5000', 'sgd_5000_to_10000', 'sgd_10000_to_15000', 'sgd_15000_above']]
+hmi_df
+# export hmi_df into csv
+hmi_df.to_csv('household_monthly_income_2020_cleansed.csv', index=False)
 ```
 
-We have now prepared 2 datasets for useful visualisations later.
+We have now prepared the dataset for useful visualisations later.
 
 [datagovsg]: https://beta.data.gov.sg/collections?query=planning%20area
+[gitrepo]: https://github.com/wjang96/onemap-sg
+[seedlyarticle]: https://blog.seedly.sg/median-singaporean-household-income-stand/
