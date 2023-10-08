@@ -167,8 +167,10 @@ hmi_df.to_csv('household_monthly_income_2020_cleansed.csv', index=False)
 ```
 We have now prepared the dataset for useful visualisations later.
 
-## 9. Convert KML file to JSON file using https://mapshaper.org/
-Choose the `geojson` option to download the Singapore Planning Areas in JSON file.
+## 9. Download KML file from [datagovsg][datagovsg] and convert to GEOJSON file
+![DF_wideformat]({{ '/assets/onemap_4.png' | relative_url }}) 
+
+Convert KML file to JSON file using this [mapshapper link][mapshapper_link]. Choose the `geojson` option to download the Singapore Planning Areas in JSON file.
 
 ![DF_wideformat]({{ '/assets/map_shapper_1.png' | relative_url }}) 
 
@@ -179,7 +181,7 @@ With the above hmi_df dataset, visualise the % breakdown of different ranges of 
 
 ![DF_wideformat]({{ '/assets/onemap_1.png' | relative_url }})
 
-Tooltip can be added to display the counts of households under the category.
+Tooltips for each planning area can be added to display the counts of households under the income bracket.
 
 ![DF_wideformat]({{ '/assets/onemap_3.png' | relative_url }}) 
 
@@ -189,4 +191,5 @@ This is an exploratory data analysis project! If you find it useful, you could d
 [gitrepo]: https://github.com/wjang96/onemap-sg
 [seedlyarticle]: https://blog.seedly.sg/median-singaporean-household-income-stand/
 [onemapapi]: https://www.onemap.gov.sg/apidocs/apidocs
+[mapshapper_link]: https://mapshaper.org/
 [shapemap]: https://learn.microsoft.com/en-us/power-bi/visuals/desktop-shape-map
