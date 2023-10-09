@@ -82,7 +82,6 @@ df = pd.read_csv('planning_area_list_2022.csv')
 # Remove the first row as it is not relevant
 df = df.tail(-1) 
 ```
-![DF_wideformat]({{ '/assets/URA_df1.png' | relative_url }}) 
 
 ## 4. For loop to perform Onemap API call mutliple times to get the household monthly income from different planning areas
 Take note that onemap API is updated every 5 years hence, we are using 2020 data
@@ -127,7 +126,6 @@ for planning_area in df['pln_area_n']:
 hmi_df = pd.read_csv('household_monthly_income_2020.csv')
 hmi_df = hmi_df.dropna(subset=['total'])
 ```
-![DF_wideformat]({{ '/assets/URA_df7.png' | relative_url }}) 
 
 ## 6. Data cleansing to remove unwanted rows and dirty data
 ```python
@@ -165,6 +163,8 @@ hmi_df
 # export hmi_df into csv
 hmi_df.to_csv('household_monthly_income_2020_cleansed.csv', index=False)
 ```
+![DF_wideformat]({{ '/assets/onemap_5.png' | relative_url }}) 
+
 We have now prepared the dataset for useful visualisations later.
 
 ## 9. Download KML file from [datagovsg][datagovsg] and convert to GEOJSON file
