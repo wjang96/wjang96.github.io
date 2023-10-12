@@ -6,3 +6,5 @@ categories: Geopandas GoogleAPI
 ---
 
 URA release a masterplan every few years and boundaries might change. With property transactions data coming in everyday, how do you identify an address is categorised under the right Planning Area & Region quickly and accurately?
+
+![DF_wideformat]({{ '/assets/regionmap.png' | relative_url }}) 
