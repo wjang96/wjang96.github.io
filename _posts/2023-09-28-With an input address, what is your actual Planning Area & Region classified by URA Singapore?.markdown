@@ -2,7 +2,7 @@
 layout: post
 title:  "With an input address, what is your Region, Planning Area & Subzone classified by URA Singapore?"
 date:   2023-09-28 20:53:58 +0800
-categories: Geopandas GoogleAPI
+categories: Geopandas Geocoding
 ---
 
 URA release a masterplan every few years and boundaries might change. With property transactions data coming in everyday, how do you identify an address is categorised under the right Planning Area & Region quickly and accurately?
@@ -24,6 +24,8 @@ If the data source you are working on do not have any geocoding information, you
 {:toc}
 
 ## 1. Use Google Geocoding API to get the Lat & Long (skip this step if it is not relevant for you)
+You may check out the [Google Geocoding API doc][geocodingapi] to learn more. Google Geocoding API returns an output response that have many useful information. The below python code takes in a list of addresses and return relevant information that we need for our own use. The tags in the returned json file we are capturing are: `formatted_address` and `geometry`.
+![DF_wideformat]({{ '/assets/geocoding_1.jpg' | relative_url }}) 
 ```python
 import googlemaps
 from datetime import datetime
@@ -64,4 +66,7 @@ with open("C:\\Users\\weijin.ang/\\Code\\property_addresses_with_lat_long.csv", 
 
 
 
+
+
 [gitrepo]: https://github.com/cgcai/SVY21
+[geocodingapi]:https://developers.google.com/maps/documentation/geocoding/requests-geocoding#json
