@@ -15,9 +15,9 @@ The objective of this post is to explain how to classify a property address with
 **A photo of the URA masterplan seperated by Planning Area**
 ![DF_wideformat]({{ '/assets/planningareamap.png' | relative_url }}) 
 
-Before we start, we need some sample data with Property addresses. To achieve our objective, we also need the Latitude and Longtitude information along with the Property addresses. The data you are working with may come with Latitude and Longtitude information or in another format like SVY21. You may make use of [conversion script][gitrepo] to convert to  Latitude and Longtitude if necessary. 
+Before we start, we need some sample data with Property addresses. To achieve our objective, we also need the `Latitude` and `Longtitude` information along with the Property addresses. The data you are working with may come with latitude/longitude pair or in another geographic format like SVY21. You may make use of [conversion script][gitrepo] to convert to `Latitude` and `Longtitude` if necessary. 
 
-If the data source you are working on do not have any geocoding information, you may make use of Google Geocoding API to get the Latitude and Longtitude.
+If the data source you are working on do not have any geocoding information, you may make use of Google Geocoding API to get the `Latitude` and `Longtitude` information.
 
 {: class="table-of-content"}
 * TOC
@@ -25,7 +25,7 @@ If the data source you are working on do not have any geocoding information, you
 
 ## 1. Use Google Geocoding API to get the Lat & Long (skip this step if it is not relevant for you)
 You may check out the [Google Geocoding API doc][geocodingapi] to learn more. Google Geocoding API returns an output response that have many useful information. The below python code takes in a list of addresses and return relevant information that we need for our own use. The tags in the returned json file we are capturing are: `formatted_address` and `geometry`.
-![DF_wideformat]({{ '/assets/geocoding_1.jpg' | relative_url }}) 
+![DF_wideformat]({{ '/assets/geocoding_1.png' | relative_url }}) 
 ```python
 import googlemaps
 from datetime import datetime
