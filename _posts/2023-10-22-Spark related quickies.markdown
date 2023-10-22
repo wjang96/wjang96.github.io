@@ -1,4 +1,3 @@
-![image](https://github.com/wjang96/wjang96.github.io/assets/72901512/7b805b90-810a-4f11-8457-c30fe8d5d9d8)---
 layout: post
 title:  "Spark related quickies for building ETL pipelines"
 date:   2023-10-22 20:53:58 +0800
@@ -38,7 +37,7 @@ Note that, modifying the spark-defaults.conf file will affect all spark applicat
 
 **With so many `select` methods using Spark, which is the better one to use?**
 
-The first `select` method below is simple. However, the other 3 select methods allow you to apply column based functions like for eg. alias (changing column name). This give you more flexibility.
+The first `select` method below is used in simple scenarios when you do not need to perform other functions. The other 3 select methods allow you to apply column based functions like for eg. alias (changing column name). This give you more flexibility.
 
 ```python
 #1
@@ -64,13 +63,17 @@ Below list is not an exhaustive list but shows you the list of various useful ma
 %python: switches the notebook context to Python.
 ```
 Examples of using magic commands:
+
 1. Use magic command %fs to check if the file is written as in dbfs
+
 ![DF_wideformat]({{ '/assets/databricks_3.png' | relative_url }})
 
 2.Use magic command %run to run your configuration file or common python functions file
+
 ![DF_wideformat]({{ '/assets/databricks_4.png' | relative_url }})
 
 **When to use `.groupBy` vs `.agg` method?**
+
 You are not able to use `.groupBy` method if you are intending to perform more than 1 aggregration after the `.groupBy` method.
 ```python
 # this won't work
@@ -88,11 +91,11 @@ demo_df\
   .show()
 ```
 
-**What is the difference between `createOrReplaceTempView` vs `createOrReplaceGlobalTempView` vs `permanent view`?
+**What is the difference between `createOrReplaceTempView` vs `createOrReplaceGlobalTempView` vs `permanent view`?**
 
 | View         | Description                | Scenario                |
 | --------------- | ---------------- | ---------------- | 
 | `createOrReplaceTempView` | A temporary view is only available within a spark session and within the notebook. If you detach the notebook from the cluster and reattach it, this view is not going to be available. | When your scope is only just a notebook → create the temp view and you only need to access it in this notebook|
 | `createOrReplaceGlobalTempView` | A global view compared to a temporary view is available across the whole application and in databricks context, this means the global view is available within all the the notebooks attached to the same cluster.| When you have other notebooks working on the same view|
-| `permanent` | Even if you detach notebook from clsuter or terminate cluster and restart, the permanent view would still exist | When you have some pipelines accessing to the views directly, eg. monitoring dashboards|
+| `permanent` | Even if you detach notebook from clsuter or terminate cluster and restart, the permanent view would still exist. | When you have some pipelines accessing to the views directly, eg. monitoring dashboards|
 
