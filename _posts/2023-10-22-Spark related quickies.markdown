@@ -12,6 +12,8 @@ There are many resources out there to build your own ETL pipeline using spark. T
 Get started to build your own ETL pipeline using a simple architecture like below and at the same, enhance your understanding with Spark!
 ![DF_wideformat]({{ '/assets/databricks_1.png' | relative_url }}) 
 
+Documenting some interesting lessons along the way of learning Spark...
+
 **How do get the list of all spark configurations?**
 
 Use spark context directly in the Databricks notebook to call the getAll function.
