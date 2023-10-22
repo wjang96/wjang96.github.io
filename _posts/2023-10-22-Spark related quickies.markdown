@@ -1,3 +1,4 @@
+---
 layout: post
 title:  "Spark related quickies for building ETL pipelines"
 date:   2023-10-22 20:53:58 +0800
