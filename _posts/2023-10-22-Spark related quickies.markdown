@@ -113,3 +113,11 @@ The advantage of groupByKey() is that it is a simple operation that does not req
 The advantage of reduceByKey() is that it is more efficient than groupByKey() for large datasets, because it reduces the amount of data that needs to be shuffled and stored in memory. However, it requires a reduce function that is associative and commutative, which may not always be the case for all aggregate functions.
 
 In summary, while reduceByKey() is generally more efficient than groupByKey(), there are still situations where groupByKey() may be a better choice due to its simplicity, flexibility, and applicability to non-associative operations. It is important to understand the characteristics of the dataset and the requirements of the operation when choosing between these two methods.
+
+**A key feature of Spark is lazy evolution, however why do we need to call cache or persist on a RDD sometimes?**
+
+Caching or persistence are optimization techniques for (iterative and interactive) Spark computations. They help saving interim partial results so they can be reused in subsequent stages. These interim results as RDDs are thus kept in memory (default) or more solid storage like disk and/or replicated. RDDs can be cached using cache operation. They can also be persisted using persist operation.
+
+However, just because you can cache a RDD in memory doesn’t mean you should blindly do so. Depending on how many times the dataset is accessed and the amount of work involved in doing so, recomputation can be faster than the price paid by the increased memory pressure.
+
+It should go without saying that if you only read a dataset once there is no point in caching it, it will actually make your job slower. The size of cached datasets can be seen from the Spark Shell!
