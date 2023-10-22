@@ -99,3 +99,14 @@ demo_df\
 | `createOrReplaceGlobalTempView` | A global view compared to a temporary view is available across the whole application and in databricks context, this means the global view is available within all the the notebooks attached to the same cluster.| When you have other notebooks working on the same view|
 | `permanent` | Even if you detach notebook from clsuter or terminate cluster and restart, the permanent view would still exist. | When you have some pipelines accessing to the views directly, eg. monitoring dashboards|
 
+**What is the difference between `groupByKey` and `reduceByKey` in Spark?**
+
+**Pros and Cons of groupByKey()**
+
+The advantage of groupByKey() is that it is a simple operation that does not require any complex logic. However, it can be inefficient for large datasets, because all the values associated with each key are shuffled across the network and stored in memory on the worker nodes. This can lead to high memory usage and slow performance.
+
+**Pros and Cons of reduceByKey()**
+
+The advantage of reduceByKey() is that it is more efficient than groupByKey() for large datasets, because it reduces the amount of data that needs to be shuffled and stored in memory. However, it requires a reduce function that is associative and commutative, which may not always be the case for all aggregate functions.
+
+In summary, while reduceByKey() is generally more efficient than groupByKey(), there are still situations where groupByKey() may be a better choice due to its simplicity, flexibility, and applicability to non-associative operations. It is important to understand the characteristics of the dataset and the requirements of the operation when choosing between these two methods.
