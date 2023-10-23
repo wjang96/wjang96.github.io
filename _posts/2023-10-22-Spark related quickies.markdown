@@ -18,7 +18,7 @@ Documenting some interesting lessons along the way of learning Spark...
 * TOC
 {:toc}
 
-## 1. **How do get the list of all spark configurations?**
+## 1. How do get the list of all spark configurations?
 
 Use spark context directly in the Databricks notebook to call the getAll function.
 ```python
@@ -42,7 +42,7 @@ simplicity.
 
 Note that, modifying the spark-defaults.conf file will affect all spark applications running on the cluster, thus make sure only the intended properties you can make changes to.
 
-**With so many `select` methods using Spark, which is the better one to use?**
+## 2. With so many `select` methods using Spark, which is the better one to use?
 
 The first `select` method below is used in simple scenarios when you do not need to perform other functions. The other 3 select methods allow you to apply column based functions like for eg. alias (changing column name). This give you more flexibility.
 
@@ -58,7 +58,7 @@ from pyspark.sql.functions import col
 df_selected = df.select(col("id").alias("location_id"), col("name"), col("location"), col("country"), col("lat"), col("lng"), col("alt))
 ```
 
-**Why is databricks magic commands so important & useful?**
+## 3. Why is databricks magic commands so important & useful?
 
 Below list is not an exhaustive list but shows you the list of various useful magic commands you can use in Databricks notebook. Essentially, magic commands allow you to write code in multiple languages using the same notebook!
 ```python
@@ -79,7 +79,7 @@ Examples of using magic commands:
 
 ![DF_wideformat]({{ '/assets/databricks_4.png' | relative_url }})
 
-**When to use `.groupBy` vs `.agg` method?**
+## 4. When to use `.groupBy` vs `.agg` method?
 
 You are not able to use `.groupBy` method if you are intending to perform more than 1 aggregration after the `.groupBy` method.
 ```python
@@ -98,7 +98,7 @@ demo_df\
   .show()
 ```
 
-**What is the difference between `createOrReplaceTempView` vs `createOrReplaceGlobalTempView` vs `permanent view`?**
+## 5. What is the difference between `createOrReplaceTempView` vs `createOrReplaceGlobalTempView` vs `permanent view`?
 
 | View         | Description                | Scenario                |
 | --------------- | ---------------- | ---------------- | 
@@ -106,7 +106,7 @@ demo_df\
 | `createOrReplaceGlobalTempView` | A global view compared to a temporary view is available across the whole application and in databricks context, this means the global view is available within all the the notebooks attached to the same cluster.| When you have other notebooks working on the same view|
 | `permanent` | Even if you detach notebook from clsuter or terminate cluster and restart, the permanent view would still exist. | When you have some pipelines accessing to the views directly, eg. monitoring dashboards|
 
-**What is the difference between `groupByKey` and `reduceByKey` in Spark?**
+## 7. What is the difference between `groupByKey` and `reduceByKey` in Spark?
 
 **Pros and Cons of groupByKey()**
 
@@ -118,7 +118,7 @@ The advantage of reduceByKey() is that it is more efficient than groupByKey() fo
 
 In summary, while reduceByKey() is generally more efficient than groupByKey(), there are still situations where groupByKey() may be a better choice due to its simplicity, flexibility, and applicability to non-associative operations. It is important to understand the characteristics of the dataset and the requirements of the operation when choosing between these two methods.
 
-**A key feature of Spark is lazy evolution, however why do we need to call cache or persist on a RDD sometimes?**
+## 8. A key feature of Spark is lazy evolution, however why do we need to call cache or persist on a RDD sometimes?**
 
 Caching or persistence are optimization techniques for (iterative and interactive) Spark computations. They help saving interim partial results so they can be reused in subsequent stages. These interim results as RDDs are thus kept in memory (default) or more solid storage like disk and/or replicated. RDDs can be cached using cache operation. They can also be persisted using persist operation.
 
@@ -126,7 +126,7 @@ However, just because you can cache a RDD in memory doesn’t mean you should bl
 
 It should go without saying that if you only read a dataset once there is no point in caching it, it will actually make your job slower. The size of cached datasets can be seen from the Spark Shell!
 
-- When to use `cache` vs `broadcast` in spark?
+## 9. When to use `cache` vs `broadcast` in spark?
 
 In Apache Spark, both caching and broadcasting are techniques used to optimize data processing and improve the performance of distributed computations, but they serve different purposes and have distinct use cases.
 
@@ -153,7 +153,7 @@ In summary, caching is used to store and reuse RDDs/DataFrames across multiple s
 
 The choice between caching and broadcasting depends on the size and usage patterns of the data and the specific requirements of your Spark application.
 
-### Use cases
+**Use cases**
 
 - Broadcast - reduce **communication costs** of data over the network by provide a **copy of shared data** to each executor.
 - Cache - reduce **computation costs** of data for repeated operations by **saving the processed data** and its **steps** (for lookup).
