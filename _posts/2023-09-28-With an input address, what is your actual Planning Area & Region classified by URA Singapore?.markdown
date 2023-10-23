@@ -9,10 +9,11 @@ URA release a masterplan every few years and boundaries might change. With prope
 
 The objective of this post is to explain how to classify a property address with the right Region, Planning Area and Subzone by URA standards.
 
-**A photo of the URA masterplan seperated by Region**
+**A photo of the URA masterplan separated by Region**
 ![DF_wideformat]({{ '/assets/regionmap.png' | relative_url }}) 
 
-**A photo of the URA masterplan seperated by Planning Area**
+
+**A photo of the URA masterplan separated by Planning Area**
 ![DF_wideformat]({{ '/assets/planningareamap.png' | relative_url }}) 
 
 Before we start, we need some sample data with Property addresses. To achieve our objective, we also need the `Latitude` and `Longtitude` information along with the Property addresses. The data you are working with may come with latitude/longitude pair or in another geographic format like SVY21. You may make use of [conversion script][gitrepo] to convert to `Latitude` and `Longtitude` if necessary. 
@@ -63,10 +64,66 @@ with open("C:\\Users\\weijin.ang/\\Code\\property_addresses_with_lat_long.csv", 
         newdatafile.write(line2 + "\n")
 ```
 
+## 2. From [datagovsg][datagovsg], URA updates the masterplan every few years and we will be able to get the most recent updated GeoJSON file of the Singapore planning area. 
+
+## 3. Using tha above URA GeoJSON file, get the Region, Planning Area & Subzone with GeoPandas
+```python
+import os
+import geopandas as gpd
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from shapely.geometry import Point
+from datetime import datetime
+from matplotlib.pyplot import figure
+
+#Reads the map file
+#Source file is from data gov sg
+# this method is reading geojson file and is recommended by geopandas
+master_subzone = gpd.read_file('C:/Users/weijin.ang/Code/PlanningBoundaryArea.json')
+master_subzone
+
+#Reads your list of buildings
+buildings_df = pd.read_csv('C:\\Users\\weijin.ang/\\Code\\test2.csv')
+buildings_df
+
+#Plots the buildings on the map as pins/points
+buildings_df['coords'] = list(zip(buildings_df['Longitude'],buildings_df['Latitude']))
+buildings_df['coords'] = buildings_df['coords'].apply(Point)
+points = gpd.GeoDataFrame(buildings_df, geometry='coords', crs=master_subzone.crs)
+points_building = gpd.GeoDataFrame(buildings_df, geometry='coords', crs=master_subzone.crs)
+points_building
+
+#Identifies the polygon each point belongs to
+pointInPolys = gpd.tools.sjoin(points_building, master_subzone, predicate="within", how='left')
+pointInPolys
+```
 
 
+## 4. Plot the building pins on the polygon map
+```python
+master_subzone.boundary.plot()
+#Map to showcase the polygons and building pins
+base = master_subzone.boundary.plot(linewidth=1, edgecolor="black")
+points.plot(ax=base, linewidth=0.01, color="blue", markersize=1)
+plt.show()
+```
 
+## 5. Export the final df with the required columns
+```python
+#Defining the export file and dropping some unecessary columns
+dfexport = pd.DataFrame(pointInPolys)
+dfexport.drop(['coords', 'index_right', 'id', 'name','description','CA_IND','REGION_C','INC_CRC','FMEL_UPD_D'], axis=1, inplace=True)
 
+#Mapping the Region column to fit better representation
+dfexport['REGION_N'] = dfexport['REGION_N'].map({'NORTH-EAST REGION': 'North-East', 'WEST REGION': 'West', 'EAST REGION': 'East', 'NORTH REGION': 'North', 'CENTRAL REGION':'Central'})
+
+#Export file to directory
+filename = datetime.now().strftime('export_%H%M_%d%m%Y.csv')
+path=r'C:\\Users\\weijin.ang\\Code\\'
+dfexport.to_csv(os.path.join(path,filename), date_format='%Y%m%d', index=False)
+```
 
 [gitrepo]: https://github.com/cgcai/SVY21
 [geocodingapi]:https://developers.google.com/maps/documentation/geocoding/requests-geocoding#json
+[datagovsg]: https://beta.data.gov.sg/collections?query=planning%20area
