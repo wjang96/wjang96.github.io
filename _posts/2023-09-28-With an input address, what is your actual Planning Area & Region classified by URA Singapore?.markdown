@@ -63,6 +63,8 @@ with open("C:\\Users\\weijin.ang/\\Code\\property_addresses_with_lat_long.csv", 
     for line2 in newdatacsv:
         newdatafile.write(line2 + "\n")
 ```
+Example source file:
+![DF_wideformat]({{ '/assets/geocoding_2.png' | relative_url }}) 
 
 ## 2. From [datagovsg][datagovsg], URA updates the masterplan every few years and we will be able to get the most recent updated GeoJSON file of the Singapore planning area. 
 
@@ -108,6 +110,7 @@ base = master_subzone.boundary.plot(linewidth=1, edgecolor="black")
 points.plot(ax=base, linewidth=0.01, color="blue", markersize=1)
 plt.show()
 ```
+![DF_wideformat]({{ '/assets/geocoding_3.png' | relative_url }}) 
 
 ## 5. Export the final df with the required columns
 ```python
@@ -123,6 +126,7 @@ filename = datetime.now().strftime('export_%H%M_%d%m%Y.csv')
 path=r'C:\\Users\\weijin.ang\\Code\\'
 dfexport.to_csv(os.path.join(path,filename), date_format='%Y%m%d', index=False)
 ```
+![DF_wideformat]({{ '/assets/geocoding_4.png' | relative_url }}) 
 
 [gitrepo]: https://github.com/cgcai/SVY21
 [geocodingapi]:https://developers.google.com/maps/documentation/geocoding/requests-geocoding#json
