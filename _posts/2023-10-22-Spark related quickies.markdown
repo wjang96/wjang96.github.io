@@ -7,14 +7,18 @@ categories: Spark Databricks
 
 Interesting FAQs & lessons from building ETL pipelines related to spark, dataframe, spark sql, configurations.
 
-There are many resources out there to build your own ETL pipeline using spark. These days, there are many web-based platform for working with Spark and one of the most popular one is Databricks. It allows any user to start your own data engineering project at a relatively low-cost and an easy-to-manage automated cluster management.
+There are many resources out there to build your own ETL pipeline using spark. These days, web-based platforms are very popular in organisations for working with Spark and one of the most popular one is Databricks. It allows any user to start your own data engineering project at a relatively low-cost and an easy-to-manage automated cluster management.
 
-Get started to build your own ETL pipeline using a simple architecture like below and at the same, enhance your understanding with Spark!
+Get started to build your own ETL pipeline using a simple architecture like below and enhance your understanding of Spark!
 ![DF_wideformat]({{ '/assets/databricks_1.png' | relative_url }}) 
 
 Documenting some interesting lessons along the way of learning Spark...
 
-**How do get the list of all spark configurations?**
+{: class="table-of-content"}
+* TOC
+{:toc}
+
+## 1. **How do get the list of all spark configurations?**
 
 Use spark context directly in the Databricks notebook to call the getAll function.
 ```python
@@ -71,7 +75,7 @@ Examples of using magic commands:
 
 ![DF_wideformat]({{ '/assets/databricks_3.png' | relative_url }})
 
-2.Use magic command %run to run your configuration file or common python functions file
+2. Use magic command %run to run your configuration file or common python functions file
 
 ![DF_wideformat]({{ '/assets/databricks_4.png' | relative_url }})
 
@@ -121,3 +125,35 @@ Caching or persistence are optimization techniques for (iterative and interactiv
 However, just because you can cache a RDD in memory doesn’t mean you should blindly do so. Depending on how many times the dataset is accessed and the amount of work involved in doing so, recomputation can be faster than the price paid by the increased memory pressure.
 
 It should go without saying that if you only read a dataset once there is no point in caching it, it will actually make your job slower. The size of cached datasets can be seen from the Spark Shell!
+
+- When to use `cache` vs `broadcast` in spark?
+
+In Apache Spark, both caching and broadcasting are techniques used to optimize data processing and improve the performance of distributed computations, but they serve different purposes and have distinct use cases.
+
+**`Caching`**
+
+**Purpose:** Caching in Spark is used to persist (store in memory or disk) a portion of a RDD (Resilient Distributed Dataset) or DataFrame so that it can be reused across multiple stages of a Spark application.
+
+1. **Use Case:** Caching is typically used for data that will be accessed multiple times in multiple operations. Examples include intermediate results in iterative algorithms or frequently used reference data.
+2. **Memory Usage:** Caching stores data in memory (default) or optionally on disk if there’s not enough memory.
+3. **Storage Level:** You can specify different storage levels (e.g., MEMORY_ONLY, MEMORY_AND_DISK, DISK_ONLY) depending on the trade-off between memory usage and recomputation cost.
+4. **Distribution:** Caching is distributed across all nodes in the cluster, ensuring data is available locally on each node.
+5. **Overhead:** Caching can consume memory resources, and managing cache usage is important to avoid out-of-memory errors.
+
+**`Broadcasting`**
+
+1. **Purpose:** Broadcasting is used to share a read-only variable or data to all worker nodes so that it can be accessed efficiently during task execution.
+2. **Use Case:** Broadcasting is appropriate for relatively small data that is used in a read-only fashion, such as lookup tables or reference data that is used by tasks across the cluster.
+3. **Memory Usage:** Broadcasting loads the data into memory on each worker node and makes it available for efficient lookups without the need for network transfers.
+4. **Storage Level:** Broadcasting doesn’t use Spark’s storage levels; it is purely in-memory.
+5. **Distribution:** The data is sent to worker nodes once and reused for multiple tasks, reducing network transfer overhead.
+6. **Overhead:** Broadcasting is memory-efficient because the data is loaded only once on each node and doesn’t persist in memory.
+
+In summary, caching is used to store and reuse RDDs/DataFrames across multiple stages of a Spark application, and it can be used for larger datasets. Broadcasting, on the other hand, is suitable for efficiently sharing small, read-only data across worker nodes, reducing data transfer and improving performance.
+
+The choice between caching and broadcasting depends on the size and usage patterns of the data and the specific requirements of your Spark application.
+
+### Use cases
+
+- Broadcast - reduce **communication costs** of data over the network by provide a **copy of shared data** to each executor.
+- Cache - reduce **computation costs** of data for repeated operations by **saving the processed data** and its **steps** (for lookup).
