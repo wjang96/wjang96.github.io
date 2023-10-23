@@ -66,7 +66,8 @@ with open("C:\\Users\\weijin.ang/\\Code\\property_addresses_with_lat_long.csv", 
 Example source file:
 ![DF_wideformat]({{ '/assets/geocoding_2.png' | relative_url }}) 
 
-## 2. From [datagovsg][datagovsg], URA updates the masterplan every few years and we will be able to get the most recent updated GeoJSON file of the Singapore planning area. 
+## 2. From [datagovsg][datagovsg], URA updates the masterplan every few years and we will be able to get the most recent updated KML file of the Singapore planning area. 
+Convert the KML file to GeoJSON file using this [link][mapshapper]
 
 ## 3. Using tha above URA GeoJSON file, get the Region, Planning Area & Subzone with GeoPandas
 ```python
@@ -126,8 +127,12 @@ filename = datetime.now().strftime('export_%H%M_%d%m%Y.csv')
 path=r'C:\\Users\\weijin.ang\\Code\\'
 dfexport.to_csv(os.path.join(path,filename), date_format='%Y%m%d', index=False)
 ```
+Example output file:
 ![DF_wideformat]({{ '/assets/geocoding_4.png' | relative_url }}) 
+
+With this automated code, you may add this as the final step in your ETL pipeline to get the Planning Area, Subzone, Region tags quickly and accurately for Singapore addresses!
 
 [gitrepo]: https://github.com/cgcai/SVY21
 [geocodingapi]:https://developers.google.com/maps/documentation/geocoding/requests-geocoding#json
 [datagovsg]: https://beta.data.gov.sg/collections?query=planning%20area
+[mapshapper]: https://mapshaper.org/
