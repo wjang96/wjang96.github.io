@@ -69,7 +69,7 @@ Example source file:
 ## 2. From [datagovsg][datagovsg], URA updates the masterplan every few years and we will be able to get the most recent updated KML file of the Singapore planning area. 
 Convert the KML file to GeoJSON file using this [link][mapshapper]
 
-## 3. Using tha above URA GeoJSON file, get the Region, Planning Area & Subzone with GeoPandas
+## 3. Using the above URA GeoJSON file, get the Region, Planning Area & Subzone with GeoPandas
 ```python
 import os
 import geopandas as gpd
