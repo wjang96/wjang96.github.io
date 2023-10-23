@@ -71,11 +71,11 @@ Below list is not an exhaustive list but shows you the list of various useful ma
 ```
 Examples of using magic commands:
 
-1. Use magic command %fs to check if the file is written as in dbfs
+- Use magic command %fs to check if the file is written as in dbfs
 
 ![DF_wideformat]({{ '/assets/databricks_3.png' | relative_url }})
 
-2. Use magic command %run to run your configuration file or common python functions file
+- Use magic command %run to run your configuration file or common python functions file
 
 ![DF_wideformat]({{ '/assets/databricks_4.png' | relative_url }})
 
@@ -106,7 +106,7 @@ demo_df\
 | `createOrReplaceGlobalTempView` | A global view compared to a temporary view is available across the whole application and in databricks context, this means the global view is available within all the the notebooks attached to the same cluster.| When you have other notebooks working on the same view|
 | `permanent` | Even if you detach notebook from clsuter or terminate cluster and restart, the permanent view would still exist. | When you have some pipelines accessing to the views directly, eg. monitoring dashboards|
 
-## 7. What is the difference between `groupByKey` and `reduceByKey` in Spark?
+## 6. What is the difference between `groupByKey` and `reduceByKey` in Spark?
 
 **Pros and Cons of groupByKey()**
 
@@ -118,7 +118,7 @@ The advantage of reduceByKey() is that it is more efficient than groupByKey() fo
 
 In summary, while reduceByKey() is generally more efficient than groupByKey(), there are still situations where groupByKey() may be a better choice due to its simplicity, flexibility, and applicability to non-associative operations. It is important to understand the characteristics of the dataset and the requirements of the operation when choosing between these two methods.
 
-## 8. A key feature of Spark is lazy evolution, however why do we need to call cache or persist on a RDD sometimes?**
+## 7. A key feature of Spark is lazy evolution, however why do we need to call cache or persist on a RDD sometimes?**
 
 Caching or persistence are optimization techniques for (iterative and interactive) Spark computations. They help saving interim partial results so they can be reused in subsequent stages. These interim results as RDDs are thus kept in memory (default) or more solid storage like disk and/or replicated. RDDs can be cached using cache operation. They can also be persisted using persist operation.
 
@@ -126,7 +126,7 @@ However, just because you can cache a RDD in memory doesn’t mean you should bl
 
 It should go without saying that if you only read a dataset once there is no point in caching it, it will actually make your job slower. The size of cached datasets can be seen from the Spark Shell!
 
-## 9. When to use `cache` vs `broadcast` in spark?
+## 8. When to use `cache` vs `broadcast` in spark?
 
 In Apache Spark, both caching and broadcasting are techniques used to optimize data processing and improve the performance of distributed computations, but they serve different purposes and have distinct use cases.
 
