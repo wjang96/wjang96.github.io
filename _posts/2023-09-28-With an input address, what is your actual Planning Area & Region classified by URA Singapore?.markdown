@@ -63,6 +63,9 @@ with open("C:\\Users\\weijin.ang/\\Code\\property_addresses_with_lat_long.csv", 
     for line2 in newdatacsv:
         newdatafile.write(line2 + "\n")
 ```
+You may monitor the API traffic and error response via the Google console
+![DF_wideformat]({{ '/assets/geocoding_5.png' | relative_url }})
+
 Example source file:
 ![DF_wideformat]({{ '/assets/geocoding_2.png' | relative_url }}) 
 
