@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Exploring Singapore private property transactions with URA API Part 3"
-date:   2023-08-28 20:53:58 +0800
+date:   2024-08-28 20:53:58 +0800
 categories: Python Jupyter
 ---
 
