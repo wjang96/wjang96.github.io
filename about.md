@@ -13,7 +13,7 @@ title:  "About"
 ## Skills
 
 + **Programming Languages**: Python, Pyspark, SQL, NoSQL, R, Shell scripting, CSS, HTML, VBA
-+ **Softwares & Tools**: Databricks, Spark, Azure Data Factory, Azure DevOps, Gitbash, Jenkins, Informatica BDM, Denodo, Microsoft Fabric, Hadoop, Microsoft SQL DB, BigQuery, Ambari, Jenkins, Unix/Linux, Jira, Salesforce, Microsoft Dynamics 365 CRM
++ **Softwares & Tools**: Databricks, Azure Data Factory, Azure DevOps, Gitbash, Jenkins, Informatica BDM, Denodo, Microsoft Fabric, Microsoft SQL DB, BigQuery, Ambari, Jenkins, Unix/Linux, Jira, Salesforce, Microsoft Dynamics 365 CRM
 + **Other Technologies**: Spark, Hive, HDFS, Hortonworks, Cloudera
 + **Data Visualisation Tools**: PowerBI, Tableau, PowerPoint
 + **Cloud / On Premises Platform Services**: Microsoft Azure, AWS, Hadoop
