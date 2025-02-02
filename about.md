@@ -5,7 +5,7 @@ title:  "About"
 ---
 
 ## About
-**Hello! Welcome to my blog!** This is a space where I document new learnings, share data engineering & analytics related codes and concepts with data enthusiasts! 
+**Hello! Welcome to my blog!** I am currently working as a Senior Data Analytics Engineer. This is a space where I document new learnings, share data engineering & analytics related codes and concepts with data enthusiasts! 
 <br><br> 
 
 <br>
